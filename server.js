@@ -1,7 +1,6 @@
 
 require('dotenv').config();
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI);
 const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
@@ -16,15 +15,9 @@ const trackRouter = require('./controllers/track.js');
 app.use(morgan('dev'));
 app.use(methodOverride('_method'));
 app.use(express.json());
-app.use(cors({origin: process.env.CORS_ORIGIN}));
+app.use(cors());
 
 // Routes
-
-mongoose.connect(process.env.MONGODB_URI)
-
-mongoose.connection.on('connected', () => {
-    console.log(`Connected to MongoDB ${mongoose.connection.name}.`)
-})
 
 app.use('/tracks', trackRouter);
 app.listen(3000, () => {
